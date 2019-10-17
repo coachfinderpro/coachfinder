@@ -11,7 +11,7 @@ function getSearchInput(event) {
     results.appendChild(searchAgain);
   }
 }
-  
+
 function getDataFromApi(searchInput) {
   fetch(`https://coach-finder.herokuapp.com/api/v1/parts/${searchInput}`)
   .then(
@@ -21,6 +21,9 @@ function getDataFromApi(searchInput) {
         return;
       }
       response.json().then(function(data) {
+        data.sort((a, b) => {
+          return a.year - b.year;
+        });
         if (searchInput !== "rando") {
           renderResultInfo(data, searchInput)
         }
